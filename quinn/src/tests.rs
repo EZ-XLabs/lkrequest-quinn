@@ -10,7 +10,7 @@ use std::{
     io,
     net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr, UdpSocket},
     str,
-    sync::Arc,
+    sync::{Arc, Once},
 };
 
 use crate::runtime::TokioRuntime;
@@ -641,6 +641,11 @@ fn gen_data(size: usize, seed: u64) -> Vec<u8> {
 }
 
 fn subscribe() -> tracing::subscriber::DefaultGuard {
+    static INIT: Once = Once::new();
+    INIT.call_once(|| {
+        let _ = rustls::crypto::ring::default_provider().install_default();
+    });
+
     let sub = tracing_subscriber::FmtSubscriber::builder()
         .with_env_filter(EnvFilter::from_default_env())
         .with_writer(|| TestWriter)
