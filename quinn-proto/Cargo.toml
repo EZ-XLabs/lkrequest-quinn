@@ -1,8 +1,8 @@
 [package]
 name = "quinn-proto"
-# 0.11.14 + backported RUSTSEC-2026-0185 fix (upstream 7c1970f1, "yield error on
-# too many gaps in assembler"). Version reflects that the security fix is present.
-version = "0.11.15"
+# lkrequest fork with the quinn-proto 0.11.17 memory-exhaustion fixes backported
+# onto the fingerprint-patched 0.11.x transport implementation.
+version = "0.11.17+lkrequest.1"
 edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
